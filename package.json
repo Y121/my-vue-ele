@@ -11,9 +11,14 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "css-loader": "^0.28.11",
+    "mint-ui": "^2.2.13",
     "qs": "^6.7.0",
+    "sass-loader": "^7.1.0",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-loader": "^13.7.3",
+    "vue-router": "^3.0.1",
+    "vue-style-loader": "^3.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
