@@ -31,14 +31,14 @@ export default {
     top:0;
     z-index:100;
     background:$blue;
-    @include wh(100%,1.95rem);
+    @include wh(100%,2.8125rem);
   }
   .head_back{
      position:absolute;
      left:0.4rem;
      span{
         @include sc(1.125rem,#fff);
-        line-height:1.95rem;
+        line-height:2.8125rem;
      }
   }
   .head_center{
@@ -54,8 +54,8 @@ export default {
     position:absolute;
     right:0.4rem;
     span{
-       @include sc(.75rem,#fff);
-        line-height:1.95rem;
+       @include sc(.875rem,#fff);
+        line-height:2.8125rem;
     }
   }
 </style>
