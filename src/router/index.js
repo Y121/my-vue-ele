@@ -3,6 +3,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 const home  = r => require.ensure([],() => r(require('../pages/home/home')),'home');
+const city = r => require.ensure([],()=>r(require('../pages/city/city')),'city');
 
 export default new Router({
   routes: [
@@ -14,6 +15,11 @@ export default new Router({
     {
       path:'/home',
       component:home
+    },
+    //当前选择城市页
+    {
+      path:'/city/:cityId',
+      component:city
     }
   ]
 })

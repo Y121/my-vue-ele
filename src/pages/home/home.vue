@@ -53,7 +53,7 @@ export default {
         sortgroupcity(){
             let sortobj = {};
             for (let i = 65; i <= 90; i++) {
-                if (this.groupCityData[String.fromCharCode(i)]) {
+                if (this.groupCityData[String.fromCharCode(i)]) {//String.fromCharCode(i)是转成对应字母
                     sortobj[String.fromCharCode(i)] = this.groupCityData[String.fromCharCode(i)];
                 }
             }

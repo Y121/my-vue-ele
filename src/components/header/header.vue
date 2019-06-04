@@ -37,7 +37,7 @@ export default {
      position:absolute;
      left:0.4rem;
      span{
-        @include sc(1.125rem,#fff);
+        @include sc(1.875rem,#fff);
         line-height:2.8125rem;
      }
   }
@@ -47,7 +47,8 @@ export default {
     color:#fff;
     text-align:center;
     .title_text{
-        @include sc(.8125rem,#fff);
+        @include sc(1.125rem,#fff);
+        font-weight:bold;
     }
   }
   .head_login{

@@ -13,3 +13,8 @@ li{
 a{
   text-decoration: none;
 }
+input{
+  border:none;
+  outline:none;
+  background:none;
+}
