@@ -15,7 +15,7 @@
             </router-link>
         </div>
         <div class="hot_city">
-            <p>热门城市</p>
+            <p>热门城市 </p>
             <ul>
                 <router-link tag="li" :to="'/city/'+item.id" v-for="(item) in hotCityData" :key="item.id">{{item.name}}</router-link>
             </ul>
