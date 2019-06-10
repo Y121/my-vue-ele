@@ -11,6 +11,7 @@
       <router-link class="head_login" v-if="signinUp" tag="div" :to="'/home'">
           <span>登录|注册</span>
       </router-link>
+      <slot name="msite-title"></slot><!--这个也是页面标题，是因为这个页面的标题还可以点击跳转页面，所以要特别写一个插槽占位-->
       <slot name="changeCity"></slot>
   </div>
 </template>
