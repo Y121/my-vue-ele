@@ -8,13 +8,15 @@
         <div @click="searchSubmit" class="search_button">提交</div>
     </div>
     <div class="add_content">
-        <div class="search_history">搜索历史</div>
+        <div class="search_history" v-if="isHistory">搜索历史</div>
         <div class="show_search">
-            <dl>
-                <dt></dt>
-                <dd></dd>
+            <dl v-for="(item,index) in addressData" :key="index" @click="goPage(item)">
+                <dt>{{item.name}}</dt>
+                <dd>{{item.address}}</dd>
             </dl>
+            <div class="clearAll" v-if="isHistory&&addressData.length" @click="clearAll">清空所有</div>
         </div>
+        <div class="clearAll  noResult" v-if="isResult">很抱歉，无搜索结果！</div>
     </div>
   </div>
 </template>
@@ -22,6 +24,7 @@
 <script>
 import headTop from '../../components/header/header'
 import {currentCity,searchAddress} from '../../api/api.js'
+import {setStore,getStore,removeStore} from '../../utils/myUtils.js'
 export default {
   name: '',
   components: {headTop},
@@ -31,19 +34,62 @@ export default {
         cityName:'',//城市名称
         searchContent:'',//搜索内容
         addressData:[],//搜索出来的数据集
+        historyList:[],//搜索历史
+        isRepeat:false,//是否重复存储
+        isHistory:true,//是否显示搜索历史字样
+        isResult:false//搜索无结果，显示提示信息
     }
   },
   mounted(){
       this.cityId = this.$route.params.cityId;
       currentCity(this.cityId).then(res=>{
           this.cityName = res.name;
-      })
+      });
+      this.initData();
   },
   methods:{
-      searchSubmit(){
-          searchAddress(this.cityId,this.searchContent).then(res=>{
+      initData(){
+          let history = getStore('placeHistory');
+          if(history){
+              this.addressData = JSON.parse(history);
+          }else{
+              this.addressData = [];
+          }
+      },
+      searchSubmit(){//搜索内容
+          if(!this.searchContent){
+              return;
+          }
+          searchAddress(this.cityId,this.searchContent).then(res=>{ 
               this.addressData = res;
+              this.isHistory = false;
+              this.isResult = res.length?false:true;
           })
+      },
+      goPage(content){//跳转到具体地址页面，同时存储搜索历史。
+          let history = getStore("placeHistory");
+          if(history){//如果有存储历史且没有存过
+             this.historyList = JSON.parse(history);
+             this.historyList.forEach((item,index)=>{
+                if(item.geohash==content.geohash){
+                    this.isRepeat = true;//搜索历史记录里面已经存在该条搜索历史
+                }
+             });
+             if(!this.isRepeat){//不存在才存储
+                 this.historyList.push(content);
+             }
+          }else{//如果该搜索历史没有存过则存储
+              this.historyList.push(content);
+          }
+          setStore("placeHistory",this.historyList);
+          this.$router.push({
+              path:'/msite',
+              query:{"geohash":content.geohash}
+          });
+      },
+      clearAll(){//清除历史记录
+          removeStore('placeHistory');
+          this.initData();
       }
   }
 }
@@ -63,7 +109,7 @@ export default {
          width:100%;
          padding:.625rem 0;
          border-top:1px solid #e4e4e4;
-         border-bottom:1px solid #e4e4e4;
+         border-bottom:2px solid #e4e4e4;
     }
     .search_input{
         width:90%;
@@ -91,6 +137,36 @@ export default {
             @include sc(.75rem,#000);
             line-height:1.25rem;
             padding-left:.625rem;
+            border-bottom:2px solid #e4e4e4;
         }
+    }
+    .show_search{
+        width:100%;
+        background:#fff;
+        dl{
+            height:3.125rem;
+            padding:.9375rem 1.25rem;
+            border-bottom:1px solid #e4e4e4;
+            dt{
+                @include sc(1rem,#000);
+                font-weight:bold;
+            }
+            dd{
+                @include sc(.8125rem,#aaa);
+                line-height:2.1875rem;
+            }
+        }
+    }
+    .clearAll{
+        height:3.125rem;
+        border-bottom:1px solid #e4e4e4;
+        @include sc(1.125rem,#333);
+        line-height:3.125rem;
+        text-align:center;
+        background:#fff;
+    }
+    .noResult{
+        text-align:left;
+        padding-left:1.25rem;
     }
 </style>

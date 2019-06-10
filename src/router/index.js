@@ -4,6 +4,7 @@ Vue.use(Router)
 
 const home  = r => require.ensure([],() => r(require('../pages/home/home')),'home');
 const city = r => require.ensure([],()=>r(require('../pages/city/city')),'city');
+const msite = r => require.ensure([],()=>r(require('../pages/msite/msite.vue')),'msite');
 
 export default new Router({
   routes: [
@@ -20,6 +21,10 @@ export default new Router({
     {
       path:'/city/:cityId',
       component:city
+    },
+    {
+      path:'/msite',
+      component:msite
     }
   ]
 })
