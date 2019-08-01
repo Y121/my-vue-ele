@@ -17,8 +17,14 @@ export const searchAddress = (city_id, keyword) => {
         }
     })
 }
-
-
+//食品分类列表
+export const classFood = () =>{
+    return axios.get('/api/v2/index_entry');
+}
+//根据经纬度详细定位
+export const getAdd = (geohash) =>{
+    return axios.get('/api/v2/pois/'+geohash);
+}
 
 
 
