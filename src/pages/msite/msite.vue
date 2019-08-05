@@ -11,8 +11,14 @@
     <div class="swiper-box">
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <div class="swiper-slider slider-part" v-for="(item,index) in foodList" :key="index">
-            <router-link :to="{path:'/food'}" v-for="foodItem in item" :key="foodItem.id">
+          <div class="swiper-slide slider-part" v-for="(item,index) in foodList" :key="index">
+            <router-link
+              :to="{path:'/food'}"
+              class="food_detail"
+              v-for="foodItem in item"
+              :key="foodItem.id"
+            >
+              <span class="iconfont">&#xe61f;</span>
               <span>{{foodItem.title}}</span>
             </router-link>
           </div>
@@ -106,6 +112,9 @@ export default {
   width: 50%;
   color: #fff;
   text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   .title_text {
     @include sc(1.125rem, #fff);
     font-weight: bold;
@@ -114,10 +123,31 @@ export default {
 // .swiper {
 //   width: 200px;
 // }
+.swiper-container {
+  width: 100%;
+  height: auto;
+  padding-bottom: 1.6rem;
+  background: #fff;
+  margin-bottom: 1rem;
+}
 .slider-part {
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  .food_detail {
+    width: 25%;
+    color: #000;
+    span {
+      display: block;
+      text-align: center;
+      margin-bottom: 0.2rem;
+    }
+    span:nth-of-type(1) {
+      @include sc(3rem, green);
+    }
+  }
 }
 .swiper-box {
-  
+  margin-top: 3rem;
 }
 </style>
