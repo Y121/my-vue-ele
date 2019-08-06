@@ -7,9 +7,16 @@
 import * as type from './mutation-types'
 
 let mutations = {
-    //保存经纬度
-    [type.SAVE_GEOHASH](state,geohash){
-        state.geohash = geohash;
-    }
+  //保存经纬度
+  [type.SAVE_GEOHASH](state, geohash) {
+    state.geohash = geohash;
+  },
+  [type.RECORD_ADDRESS](state, { //对象解构
+    latitude,
+    longitude
+  }) {
+    state.latitude = latitude;
+    state.longitude = longitude;
+  }
 }
 export default mutations;

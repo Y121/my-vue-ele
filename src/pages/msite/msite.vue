@@ -61,6 +61,8 @@ export default {
     //保存geohash到vuex
     this.SAVE_GEOHASH(this.geohash);
     let res = await getAdd(this.geohash);
+    //保存经纬度到vuex
+    this.RECORD_ADDRESS(res);
     this.title = res.name;
   },
   computed: {
@@ -90,7 +92,7 @@ export default {
   },
   methods: {
     //一个组件中可能需要多个mutations
-    ...mapMutations(["SAVE_GEOHASH"])
+    ...mapMutations(["SAVE_GEOHASH", "RECORD_ADDRESS"])
   }
 };
 </script>
