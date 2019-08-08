@@ -26,6 +26,7 @@
         <div class="swiper-pagination"></div>
       </div>
     </div>
+    <shopList v-if="getAddressFlag"></shopList>
   </div>
 </template>
 
@@ -35,6 +36,7 @@ import { cityGuess, getAdd, classFood } from "../../api/api";
 
 import headerTop from "../../components/header/header";
 import footer from "../../components/footer/footer";
+import shopList from "../../components/common/shopList";
 import "../../plugins/swiper.min.js";
 import "../../assets/css/plugins/swiper.min.css";
 
@@ -43,12 +45,13 @@ require("babel-polyfill");
 
 export default {
   name: "",
-  components: { headerTop },
+  components: { headerTop, shopList },
   data() {
     return {
       geohash: "", //经纬度
       title: "请选择地址",
-      foodList: [] //食品类型列表
+      foodList: [], //食品类型列表
+      getAddressFlag: false //是否已经获取到地理位置数据
     };
   },
   async beforeMount() {
@@ -64,6 +67,7 @@ export default {
     //保存经纬度到vuex
     this.RECORD_ADDRESS(res);
     this.title = res.name;
+    this.getAddressFlag = true;
   },
   computed: {
     // 一个组件中可能会需要多个state，此处只是示例
