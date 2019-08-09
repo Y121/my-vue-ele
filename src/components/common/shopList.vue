@@ -1,7 +1,10 @@
 <!-- 商铺列表 -->
 <template>
   <div class="shopList">
-    <div></div>
+    <div v-for="(item,index) in shopListArr" :key="index">
+      <div class="list_left"></div>
+      <div class="list_right"></div>
+    </div>
   </div>
 </template>
 
@@ -36,8 +39,6 @@ export default {
         this.datarestaurantCategoryId
       );
       this.shopListArr = [...res];
-      console.dir(this.shopListArr);
-      console.log(res);
     }
   }
 };
