@@ -150,16 +150,17 @@ export default {
   width: 100%;
   background: #fff;
   dl {
-    height: 3.125rem;
+    // height: 3.125rem;
     padding: 0.9375rem 1.25rem;
     border-bottom: 1px solid #e4e4e4;
     dt {
       @include sc(1rem, #000);
-      font-weight: bold;
+      // font-weight: bold;
+      line-height: 2rem;
     }
     dd {
-      @include sc(0.8125rem, #aaa);
-      line-height: 2.1875rem;
+      @include sc(0.7rem, #aaa);
+      line-height: 1rem;
     }
   }
 }

@@ -18,7 +18,9 @@
               v-for="foodItem in item"
               :key="foodItem.id"
             >
-              <span class="iconfont">&#xe61f;</span>
+              <span class="swiperImg">
+                <img :src="imgBaseUrl+foodItem.image_url" />
+              </span>
               <span>{{foodItem.title}}</span>
             </router-link>
           </div>
@@ -26,7 +28,9 @@
         <div class="swiper-pagination"></div>
       </div>
     </div>
-    <shopList v-if="getAddressFlag"></shopList>
+    <shopList style="
+  margin-bottom: 3rem;" v-if="getAddressFlag"></shopList>
+    <my-footer></my-footer>
   </div>
 </template>
 
@@ -35,7 +39,7 @@ import { mapState, mapMutations } from "vuex";
 import { cityGuess, getAdd, classFood } from "../../api/api";
 
 import headerTop from "../../components/header/header";
-import footer from "../../components/footer/footer";
+import myFooter from "../../components/footer/footer";
 import shopList from "../../components/common/shopList";
 import "../../plugins/swiper.min.js";
 import "../../assets/css/plugins/swiper.min.css";
@@ -45,13 +49,14 @@ require("babel-polyfill");
 
 export default {
   name: "",
-  components: { headerTop, shopList },
+  components: { headerTop, shopList, myFooter },
   data() {
     return {
       geohash: "", //经纬度
       title: "请选择地址",
       foodList: [], //食品类型列表
-      getAddressFlag: false //是否已经获取到地理位置数据
+      getAddressFlag: false, //是否已经获取到地理位置数据
+      imgBaseUrl: "https://fuss10.elemecdn.com"
     };
   },
   async beforeMount() {
@@ -155,5 +160,11 @@ export default {
 }
 .swiper-box {
   margin-top: 3rem;
+}
+.swiperImg {
+  img {
+    width: 50%;
+    height: 50%;
+  }
 }
 </style>
