@@ -13,7 +13,7 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide slider-part" v-for="(item,index) in foodList" :key="index">
             <router-link
-              :to="{path:'/food'}"
+              :to="{path:'/food',query: {geohash, title: foodItem.title, restaurant_category_id: getCategoryId(foodItem.link)}}"
               class="food_detail"
               v-for="foodItem in item"
               :key="foodItem.id"
@@ -101,7 +101,18 @@ export default {
   },
   methods: {
     //一个组件中可能需要多个mutations
-    ...mapMutations(["SAVE_GEOHASH", "RECORD_ADDRESS"])
+    ...mapMutations(["SAVE_GEOHASH", "RECORD_ADDRESS"]),
+    // 解码url地址，求去restaurant_category_id值
+    getCategoryId(url) {
+      let urlData = decodeURIComponent(
+        url.split("=")[1].replace("&target_name", "")
+      );
+      if (/restaurant_category_id/gi.test(urlData)) {
+        return JSON.parse(urlData).restaurant_category_id.id;
+      } else {
+        return "";
+      }
+    }
   }
 };
 </script>
