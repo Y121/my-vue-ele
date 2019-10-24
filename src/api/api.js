@@ -62,10 +62,7 @@ export const shopList = (
 };
 //获取所有商铺分类列表
 export const shopClassify = (latitude, longitude) => {
-  return axios.get("/shopping/v2/restaurant/category", {
-    params: {
-      latitude,
-      longitude
-    }
+  return axios.get("/api/shopping/v2/restaurant/category", {
+    params: { latitude, longitude }
   });
 };
