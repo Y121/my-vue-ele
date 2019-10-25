@@ -20,7 +20,12 @@
       <div class="detail_data">
         <div class="first">
           <ul class="first_left">
-            <li v-for="(item,index) in category" :key="index">
+            <li
+              v-for="(item,index) in category"
+              :key="index"
+              @click="getDetailCategory(index)"
+              :class="{active:restaurant_category_id==item.id}"
+            >
               <div>
                 <img v-if="index" :src="imgBaseUrl+item.image_url" />
                 <span>{{item.name}}</span>
@@ -32,9 +37,9 @@
             </li>
           </ul>
           <ul class="first_right">
-            <li>
-              <span>小龙虾</span>
-              <span>23</span>
+            <li v-for="(item,index) in detailCategory" :key="index">
+              <span>{{item.name}}</span>
+              <span>{{item.count}}</span>
             </li>
           </ul>
         </div>
@@ -53,7 +58,9 @@ export default {
       title: "", //页面标题
       geohash: "", //city页面传递过来的地址geohash
       category: null, //左侧分栏数据
-      imgBaseUrl: "https://fuss10.elemecdn.com/"
+      imgBaseUrl: "https://fuss10.elemecdn.com/",
+      detailCategory: null, //左侧分栏详细数据
+      restaurant_category_id: "" //食品类型ID值
     };
   },
   components: {
@@ -70,6 +77,7 @@ export default {
     async initData() {
       this.title = this.$route.query.title;
       this.geohash = this.$route.query.geohash;
+      this.restaurant_category_id = this.$route.query.restaurant_category_id;
       //防止刷新页面，vuex状态丢失
       if (!this.latitude) {
         let res = await api.getAdd(this.geohash);
@@ -78,6 +86,12 @@ export default {
       //获取左侧分栏数据
       this.category = await api.shopClassify(this.latitude, this.longitude);
       console.log(this.category);
+    },
+    getDetailCategory(index) {
+      if (index == 0) {
+        return;
+      }
+      this.detailCategory = this.category[index].sub_categories;
     }
   }
 };
@@ -85,7 +99,11 @@ export default {
 
 <style lang='scss' scoped>
 .main_content {
-  margin-top: 3rem;
+  background: #fff;
+  width: 100%;
+  position: absolute;
+  top: 3rem;
+  left: 0;
   background: #fff;
   .menu_top {
     display: flex;
@@ -135,9 +153,14 @@ export default {
             }
           }
         }
+        li.active {
+          background: #fff;
+        }
       }
       .first_right {
         width: 50%;
+        overflow: scroll;
+        height: 25.7rem;
         li {
           width: 90%;
           float: right;
