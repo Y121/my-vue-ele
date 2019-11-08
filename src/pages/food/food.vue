@@ -93,7 +93,7 @@
                   </li>
                 </ul>
               </div>
-            </div>
+            </div> 
             <div class="third_bottons">
               <div class="clear" style="background:#fff;color:#333;" @click="clearAll">清空</div>
               <div class="confirm">确定<span v-show="this.activetyCount">({{activetyCount}})</span></div>
