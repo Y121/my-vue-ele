@@ -66,3 +66,9 @@ export const shopClassify = (latitude, longitude) => {
     params: { latitude, longitude }
   });
 };
+//获取商家属性活动列表
+export const shopActivity = (latitude,longitude) =>{
+  return axios.get("/api/shopping/v1/restaurants/activity_attributes",{
+    params:{latitude,longitude}
+  });
+}
