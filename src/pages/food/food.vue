@@ -4,15 +4,15 @@
     <my-header goBack="true" :headTitle="title"></my-header>
     <div class="main_content">
       <ul class="menu_top">
-        <li @click="sortName='first'">
+        <li @click="chooseSort('first')">
           {{title}}
           <span class="iconfont">&#xeb6d;</span>
         </li>
-        <li @click="sortName='second'">
+        <li @click="chooseSort('second')">
           排序
           <span class="iconfont">&#xeb6d;</span>
         </li>
-        <li @click="sortName='third'">
+        <li @click="chooseSort('third')">
           筛选
           <span class="iconfont">&#xeb6d;</span>
         </li>
@@ -103,6 +103,9 @@
         <!-- </div>
       </transition> -->
     </div>
+    <div class="main_shop">
+      <shop-list></shop-list>
+    </div>
   </div>
 </template>
 
@@ -110,6 +113,7 @@
 import { mapMutations, mapState } from "vuex";
 import header from "../../components/header/header";
 import * as api from "../../api/api.js";
+import shopList from '../../components/common/shopList'
 export default {
   data() {
     return {
@@ -119,14 +123,15 @@ export default {
       imgBaseUrl: "https://fuss10.elemecdn.com/",
       detailCategory: null, //左侧分栏详细数据
       restaurant_category_id: "", //食品类型ID值
-      sortName:'first',//区分点击哪个分类
+      sortName:'',//区分点击哪个分类
       shopActivity:null,//商铺属性活动列表
       activetyCount:0,//选择的商铺属性活动总数量
       select_activities:[],//选中的商铺属性活动数据
     };
   },
   components: {
-    myHeader: header
+    myHeader: header,
+    shopList:shopList
   },
   computed: {
     ...mapState(["latitude", "longitude"])
@@ -186,6 +191,13 @@ export default {
         return !item.status;
       });
       this.activetyCount = 0;
+    },
+    chooseSort(type){
+      if(this.sortName!=type){
+        this.sortName = type;
+      }else{
+        this.sortName = '';
+      }
     }
   }
 };
@@ -195,8 +207,8 @@ export default {
 .main_content {
   background: #fff;
   width: 100%;
-  position: absolute;
-  top: 3rem;
+  position: fixed;
+  top: 2.7rem;
   left: 0;
   background: #fff;
   .menu_top {
@@ -369,7 +381,9 @@ export default {
   .showlist-leave-active {
     opacity: 0;
     transform: translateY(-100%);
-  }
-  
+  } 
 }
-</style>
+.main_shop{
+    margin-top:5rem;
+  }
+</style>  
